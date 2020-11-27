@@ -238,8 +238,11 @@
     variable_list   : { /* empty */
                         $$ = nil_Variables();
                     }
-                    | variable_list variable { /* several variables */
-                        $$ = append_Variables($1, single_Variables($2));
+                    | variable {
+                    	$$ = single_Variables($1);
+                    }
+                    | variable_list ',' variable { /* several variables */
+                        $$ = append_Variables($1, single_Variables($3));
                     }
 
     stmtBlock   : '{' '}' {
