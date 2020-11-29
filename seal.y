@@ -163,9 +163,9 @@
 	%type <continueStmt> continueStmt
 	%type <breakStmt> breakStmt
 	%type <expr> expr
-	%type <exprs> expr_list
+//	%type <exprs> expr_list
 	%type <call> call
-	%type <actual> actual
+//	%type <actual> actual
 	%type <actuals> actual_list
 
     /* Precedence declarations go here. */
@@ -245,10 +245,7 @@
                         $$ = append_Variables($1, single_Variables($3));
                     }
 
-    stmtBlock   : '{' '}' {
-                    $$ = stmtBlock(nil_VariableDecls(), nil_Stmts());
-                }
-                | '{' variableDecl_list stmt_list '}' {
+    stmtBlock   : '{' variableDecl_list stmt_list '}' {
                     $$ = stmtBlock($2, $3);
                 }
                 ;
