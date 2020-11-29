@@ -151,6 +151,7 @@
 	%type <variableDecls> variableDecl_list
 	%type <variableDecl> variableDecl
 	%type <variables> variable_list
+	%type <variables> variable_list_notNone
 	%type <variable> variable
 	%type <callDecl> callDecl
 	%type <stmtBlock> stmtBlock
@@ -239,12 +240,18 @@
     variable_list   : { /* empty */
                         $$ = nil_Variables();
                     }
-                    | variable {
-                    	$$ = single_Variables($1);
+                    | variable_list_notNone {
+                    	$$ = $1;
                     }
-                    | variable_list ',' variable { /* several variables */
-                        $$ = append_Variables($1, single_Variables($3));
-                    }
+                    ;
+
+    variable_list_notNone	: variable {
+                    			$$ = single_Variables($1);
+                    		}
+                    		| variable_list_notNone ',' variable { /* several variables */
+                        		$$ = append_Variables($1, single_Variables($3));
+                    		}
+                    		;
 
     stmtBlock   : '{' variableDecl_list stmt_list '}' {
                     $$ = stmtBlock($2, $3);
@@ -442,10 +449,10 @@
     actual_list_notNone	: expr { /* single */
                     	    $$ = single_Actuals(actual($1));
                 	}
-                | actual_list_notNone ',' expr { /* several expression */
-                    $$ = append_Actuals($1, single_Actuals(actual($3)));
-                }
-                ;
+                	| actual_list_notNone ',' expr { /* several expression */
+                    		$$ = append_Actuals($1, single_Actuals(actual($3)));
+                	}
+                	;
 
 
 
