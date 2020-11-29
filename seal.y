@@ -167,6 +167,7 @@
 	%type <call> call
 //	%type <actual> actual
 	%type <actuals> actual_list
+	%type <actuals> actual_list_notNone
 
     /* Precedence declarations go here. */
 	%nonassoc ELSE
@@ -433,10 +434,15 @@
     actual_list : { /* empty */
                     $$ = nil_Actuals();
                 }
-                | expr { /* single */
-                    $$ = single_Actuals(actual($1));
+                | actual_list_notNone {
+                    $$ = $1;
                 }
-                | actual_list ',' expr { /* several expression */
+                ;
+
+    actual_list_notNone	: expr { /* single */
+                    	    $$ = single_Actuals(actual($1));
+                	}
+                | actual_list_notNone ',' expr { /* several expression */
                     $$ = append_Actuals($1, single_Actuals(actual($3)));
                 }
                 ;

@@ -90,8 +90,10 @@
    68 call: OBJECTID '(' actual_list ')'
 
    69 actual_list: %empty
-   70            | expr
-   71            | actual_list ',' expr
+   70            | actual_list_notNone
+
+   71 actual_list_notNone: expr
+   72                    | actual_list_notNone ',' expr
 
 
 Terminals, with rules where they appear
@@ -104,7 +106,7 @@ $end (0) 0
 ')' (41) 10 47 68
 '*' (42) 51
 '+' (43) 49
-',' (44) 13 71
+',' (44) 13 72
 '-' (45) 50 54
 '/' (47) 52
 ';' (59) 6 17 18 29 30 31 32 33 34 35 36 37 38 39 40
@@ -183,11 +185,13 @@ expr (62)
     左： 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59
     60 61 62 63 64 65 66 67, 右： 18 26 27 28 29 30 31 32 33 34 35
     37 41 47 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66
-    67 70 71
+    67 71 72
 call (63)
     左： 68, 右： 46
 actual_list (64)
-    左： 69 70 71, 右： 68 71
+    左： 69 70, 右： 68
+actual_list_notNone (65)
+    左： 71 72, 右： 70 72
 
 
 State 0
@@ -1010,9 +1014,10 @@ State 63
 
     $default  reduce using rule 69 (actual_list)
 
-    expr         转到状态 92
-    call         转到状态 53
-    actual_list  转到状态 93
+    expr                 转到状态 92
+    call                 转到状态 53
+    actual_list          转到状态 93
+    actual_list_notNone  转到状态 94
 
 
 State 64
@@ -1128,7 +1133,7 @@ State 67
     '&'    shift, and go to state 81
     '|'    shift, and go to state 82
     '^'    shift, and go to state 83
-    ')'    shift, and go to state 94
+    ')'    shift, and go to state 95
 
 
 State 68
@@ -1145,7 +1150,7 @@ State 68
     '~'           shift, and go to state 40
     '('           shift, and go to state 42
 
-    expr  转到状态 95
+    expr  转到状态 96
     call  转到状态 53
 
 
@@ -1163,7 +1168,7 @@ State 69
     '~'           shift, and go to state 40
     '('           shift, and go to state 42
 
-    expr  转到状态 96
+    expr  转到状态 97
     call  转到状态 53
 
 
@@ -1181,7 +1186,7 @@ State 70
     '~'           shift, and go to state 40
     '('           shift, and go to state 42
 
-    expr  转到状态 97
+    expr  转到状态 98
     call  转到状态 53
 
 
@@ -1199,7 +1204,7 @@ State 71
     '~'           shift, and go to state 40
     '('           shift, and go to state 42
 
-    expr  转到状态 98
+    expr  转到状态 99
     call  转到状态 53
 
 
@@ -1217,7 +1222,7 @@ State 72
     '~'           shift, and go to state 40
     '('           shift, and go to state 42
 
-    expr  转到状态 99
+    expr  转到状态 100
     call  转到状态 53
 
 
@@ -1235,7 +1240,7 @@ State 73
     '~'           shift, and go to state 40
     '('           shift, and go to state 42
 
-    expr  转到状态 100
+    expr  转到状态 101
     call  转到状态 53
 
 
@@ -1253,7 +1258,7 @@ State 74
     '~'           shift, and go to state 40
     '('           shift, and go to state 42
 
-    expr  转到状态 101
+    expr  转到状态 102
     call  转到状态 53
 
 
@@ -1271,7 +1276,7 @@ State 75
     '~'           shift, and go to state 40
     '('           shift, and go to state 42
 
-    expr  转到状态 102
+    expr  转到状态 103
     call  转到状态 53
 
 
@@ -1289,7 +1294,7 @@ State 76
     '~'           shift, and go to state 40
     '('           shift, and go to state 42
 
-    expr  转到状态 103
+    expr  转到状态 104
     call  转到状态 53
 
 
@@ -1307,7 +1312,7 @@ State 77
     '~'           shift, and go to state 40
     '('           shift, and go to state 42
 
-    expr  转到状态 104
+    expr  转到状态 105
     call  转到状态 53
 
 
@@ -1325,7 +1330,7 @@ State 78
     '~'           shift, and go to state 40
     '('           shift, and go to state 42
 
-    expr  转到状态 105
+    expr  转到状态 106
     call  转到状态 53
 
 
@@ -1343,7 +1348,7 @@ State 79
     '~'           shift, and go to state 40
     '('           shift, and go to state 42
 
-    expr  转到状态 106
+    expr  转到状态 107
     call  转到状态 53
 
 
@@ -1361,7 +1366,7 @@ State 80
     '~'           shift, and go to state 40
     '('           shift, and go to state 42
 
-    expr  转到状态 107
+    expr  转到状态 108
     call  转到状态 53
 
 
@@ -1379,7 +1384,7 @@ State 81
     '~'           shift, and go to state 40
     '('           shift, and go to state 42
 
-    expr  转到状态 108
+    expr  转到状态 109
     call  转到状态 53
 
 
@@ -1397,7 +1402,7 @@ State 82
     '~'           shift, and go to state 40
     '('           shift, and go to state 42
 
-    expr  转到状态 109
+    expr  转到状态 110
     call  转到状态 53
 
 
@@ -1415,7 +1420,7 @@ State 83
     '~'           shift, and go to state 40
     '('           shift, and go to state 42
 
-    expr  转到状态 110
+    expr  转到状态 111
     call  转到状态 53
 
 
@@ -1431,7 +1436,7 @@ State 85
    26 ifStmt: IF expr stmtBlock . ELSE stmtBlock
    27       | IF expr stmtBlock .
 
-    ELSE  shift, and go to state 111
+    ELSE  shift, and go to state 112
 
     $default  reduce using rule 27 (ifStmt)
 
@@ -1459,8 +1464,8 @@ State 87
     '('           shift, and go to state 42
     '{'           shift, and go to state 22
 
-    stmtBlock  转到状态 112
-    expr       转到状态 113
+    stmtBlock  转到状态 113
+    expr       转到状态 114
     call       转到状态 53
 
 
@@ -1501,7 +1506,7 @@ State 88
     '&'    shift, and go to state 81
     '|'    shift, and go to state 82
     '^'    shift, and go to state 83
-    ';'    shift, and go to state 114
+    ';'    shift, and go to state 115
 
 
 State 89
@@ -1519,10 +1524,10 @@ State 89
     '-'           shift, and go to state 38
     '!'           shift, and go to state 39
     '~'           shift, and go to state 40
-    ';'           shift, and go to state 115
+    ';'           shift, and go to state 116
     '('           shift, and go to state 42
 
-    expr  转到状态 116
+    expr  转到状态 117
     call  转到状态 53
 
 
@@ -1591,7 +1596,7 @@ State 92
    63     | expr . '^' expr
    66     | expr . '&' expr
    67     | expr . '|' expr
-   70 actual_list: expr .
+   71 actual_list_notNone: expr .
 
     AND    shift, and go to state 68
     OR     shift, and go to state 69
@@ -1610,26 +1615,34 @@ State 92
     '|'    shift, and go to state 82
     '^'    shift, and go to state 83
 
-    $default  reduce using rule 70 (actual_list)
+    $default  reduce using rule 71 (actual_list_notNone)
 
 
 State 93
 
    68 call: OBJECTID '(' actual_list . ')'
-   71 actual_list: actual_list . ',' expr
 
-    ')'  shift, and go to state 117
-    ','  shift, and go to state 118
+    ')'  shift, and go to state 118
 
 
 State 94
+
+   70 actual_list: actual_list_notNone .
+   72 actual_list_notNone: actual_list_notNone . ',' expr
+
+    ','  shift, and go to state 119
+
+    $default  reduce using rule 70 (actual_list)
+
+
+State 95
 
    47 expr: '(' expr ')' .
 
     $default  reduce using rule 47 (expr)
 
 
-State 95
+State 96
 
    49 expr: expr . '+' expr
    50     | expr . '-' expr
@@ -1668,7 +1681,7 @@ State 95
     $default  reduce using rule 61 (expr)
 
 
-State 96
+State 97
 
    49 expr: expr . '+' expr
    50     | expr . '-' expr
@@ -1708,7 +1721,7 @@ State 96
     $default  reduce using rule 62 (expr)
 
 
-State 97
+State 98
 
    49 expr: expr . '+' expr
    50     | expr . '-' expr
@@ -1747,7 +1760,7 @@ State 97
     $default  reduce using rule 57 (expr)
 
 
-State 98
+State 99
 
    49 expr: expr . '+' expr
    50     | expr . '-' expr
@@ -1786,7 +1799,7 @@ State 98
     $default  reduce using rule 58 (expr)
 
 
-State 99
+State 100
 
    49 expr: expr . '+' expr
    50     | expr . '-' expr
@@ -1818,7 +1831,7 @@ State 99
     $default  reduce using rule 59 (expr)
 
 
-State 100
+State 101
 
    49 expr: expr . '+' expr
    50     | expr . '-' expr
@@ -1850,7 +1863,7 @@ State 100
     $default  reduce using rule 56 (expr)
 
 
-State 101
+State 102
 
    49 expr: expr . '+' expr
    50     | expr . '-' expr
@@ -1882,7 +1895,7 @@ State 101
     $default  reduce using rule 55 (expr)
 
 
-State 102
+State 103
 
    49 expr: expr . '+' expr
    50     | expr . '-' expr
@@ -1914,7 +1927,7 @@ State 102
     $default  reduce using rule 60 (expr)
 
 
-State 103
+State 104
 
    49 expr: expr . '+' expr
    49     | expr '+' expr .
@@ -1944,7 +1957,7 @@ State 103
     $default  reduce using rule 49 (expr)
 
 
-State 104
+State 105
 
    49 expr: expr . '+' expr
    50     | expr . '-' expr
@@ -1974,7 +1987,7 @@ State 104
     $default  reduce using rule 50 (expr)
 
 
-State 105
+State 106
 
    49 expr: expr . '+' expr
    50     | expr . '-' expr
@@ -2001,7 +2014,7 @@ State 105
     $default  reduce using rule 51 (expr)
 
 
-State 106
+State 107
 
    49 expr: expr . '+' expr
    50     | expr . '-' expr
@@ -2028,7 +2041,7 @@ State 106
     $default  reduce using rule 52 (expr)
 
 
-State 107
+State 108
 
    49 expr: expr . '+' expr
    50     | expr . '-' expr
@@ -2055,7 +2068,7 @@ State 107
     $default  reduce using rule 53 (expr)
 
 
-State 108
+State 109
 
    49 expr: expr . '+' expr
    50     | expr . '-' expr
@@ -2078,7 +2091,7 @@ State 108
     $default  reduce using rule 66 (expr)
 
 
-State 109
+State 110
 
    49 expr: expr . '+' expr
    50     | expr . '-' expr
@@ -2101,7 +2114,7 @@ State 109
     $default  reduce using rule 67 (expr)
 
 
-State 110
+State 111
 
    49 expr: expr . '+' expr
    50     | expr . '-' expr
@@ -2124,23 +2137,23 @@ State 110
     $default  reduce using rule 63 (expr)
 
 
-State 111
+State 112
 
    26 ifStmt: IF expr stmtBlock ELSE . stmtBlock
 
     '{'  shift, and go to state 22
 
-    stmtBlock  转到状态 119
+    stmtBlock  转到状态 120
 
 
-State 112
+State 113
 
    36 forStmt: FOR ';' ';' stmtBlock .
 
     $default  reduce using rule 36 (forStmt)
 
 
-State 113
+State 114
 
    35 forStmt: FOR ';' ';' expr . stmtBlock
    49 expr: expr . '+' expr
@@ -2178,10 +2191,10 @@ State 113
     '^'    shift, and go to state 83
     '{'    shift, and go to state 22
 
-    stmtBlock  转到状态 120
+    stmtBlock  转到状态 121
 
 
-State 114
+State 115
 
    33 forStmt: FOR ';' expr ';' . expr stmtBlock
    34        | FOR ';' expr ';' . stmtBlock
@@ -2197,12 +2210,12 @@ State 114
     '('           shift, and go to state 42
     '{'           shift, and go to state 22
 
-    stmtBlock  转到状态 121
-    expr       转到状态 122
+    stmtBlock  转到状态 122
+    expr       转到状态 123
     call       转到状态 53
 
 
-State 115
+State 116
 
    31 forStmt: FOR expr ';' ';' . expr stmtBlock
    32        | FOR expr ';' ';' . stmtBlock
@@ -2218,12 +2231,12 @@ State 115
     '('           shift, and go to state 42
     '{'           shift, and go to state 22
 
-    stmtBlock  转到状态 123
-    expr       转到状态 124
+    stmtBlock  转到状态 124
+    expr       转到状态 125
     call       转到状态 53
 
 
-State 116
+State 117
 
    29 forStmt: FOR expr ';' expr . ';' expr stmtBlock
    30        | FOR expr ';' expr . ';' stmtBlock
@@ -2260,19 +2273,19 @@ State 116
     '&'    shift, and go to state 81
     '|'    shift, and go to state 82
     '^'    shift, and go to state 83
-    ';'    shift, and go to state 125
+    ';'    shift, and go to state 126
 
 
-State 117
+State 118
 
    68 call: OBJECTID '(' actual_list ')' .
 
     $default  reduce using rule 68 (call)
 
 
-State 118
+State 119
 
-   71 actual_list: actual_list ',' . expr
+   72 actual_list_notNone: actual_list_notNone ',' . expr
 
     CONST_BOOL    shift, and go to state 33
     CONST_INT     shift, and go to state 34
@@ -2284,82 +2297,34 @@ State 118
     '~'           shift, and go to state 40
     '('           shift, and go to state 42
 
-    expr  转到状态 126
+    expr  转到状态 127
     call  转到状态 53
 
 
-State 119
+State 120
 
    26 ifStmt: IF expr stmtBlock ELSE stmtBlock .
 
     $default  reduce using rule 26 (ifStmt)
 
 
-State 120
+State 121
 
    35 forStmt: FOR ';' ';' expr stmtBlock .
 
     $default  reduce using rule 35 (forStmt)
 
 
-State 121
+State 122
 
    34 forStmt: FOR ';' expr ';' stmtBlock .
 
     $default  reduce using rule 34 (forStmt)
 
 
-State 122
-
-   33 forStmt: FOR ';' expr ';' expr . stmtBlock
-   49 expr: expr . '+' expr
-   50     | expr . '-' expr
-   51     | expr . '*' expr
-   52     | expr . '/' expr
-   53     | expr . '%' expr
-   55     | expr . '<' expr
-   56     | expr . LE expr
-   57     | expr . EQUAL expr
-   58     | expr . NE expr
-   59     | expr . GE expr
-   60     | expr . '>' expr
-   61     | expr . AND expr
-   62     | expr . OR expr
-   63     | expr . '^' expr
-   66     | expr . '&' expr
-   67     | expr . '|' expr
-
-    AND    shift, and go to state 68
-    OR     shift, and go to state 69
-    EQUAL  shift, and go to state 70
-    NE     shift, and go to state 71
-    GE     shift, and go to state 72
-    LE     shift, and go to state 73
-    '<'    shift, and go to state 74
-    '>'    shift, and go to state 75
-    '+'    shift, and go to state 76
-    '-'    shift, and go to state 77
-    '*'    shift, and go to state 78
-    '/'    shift, and go to state 79
-    '%'    shift, and go to state 80
-    '&'    shift, and go to state 81
-    '|'    shift, and go to state 82
-    '^'    shift, and go to state 83
-    '{'    shift, and go to state 22
-
-    stmtBlock  转到状态 127
-
-
 State 123
 
-   32 forStmt: FOR expr ';' ';' stmtBlock .
-
-    $default  reduce using rule 32 (forStmt)
-
-
-State 124
-
-   31 forStmt: FOR expr ';' ';' expr . stmtBlock
+   33 forStmt: FOR ';' expr ';' expr . stmtBlock
    49 expr: expr . '+' expr
    50     | expr . '-' expr
    51     | expr . '*' expr
@@ -2398,7 +2363,55 @@ State 124
     stmtBlock  转到状态 128
 
 
+State 124
+
+   32 forStmt: FOR expr ';' ';' stmtBlock .
+
+    $default  reduce using rule 32 (forStmt)
+
+
 State 125
+
+   31 forStmt: FOR expr ';' ';' expr . stmtBlock
+   49 expr: expr . '+' expr
+   50     | expr . '-' expr
+   51     | expr . '*' expr
+   52     | expr . '/' expr
+   53     | expr . '%' expr
+   55     | expr . '<' expr
+   56     | expr . LE expr
+   57     | expr . EQUAL expr
+   58     | expr . NE expr
+   59     | expr . GE expr
+   60     | expr . '>' expr
+   61     | expr . AND expr
+   62     | expr . OR expr
+   63     | expr . '^' expr
+   66     | expr . '&' expr
+   67     | expr . '|' expr
+
+    AND    shift, and go to state 68
+    OR     shift, and go to state 69
+    EQUAL  shift, and go to state 70
+    NE     shift, and go to state 71
+    GE     shift, and go to state 72
+    LE     shift, and go to state 73
+    '<'    shift, and go to state 74
+    '>'    shift, and go to state 75
+    '+'    shift, and go to state 76
+    '-'    shift, and go to state 77
+    '*'    shift, and go to state 78
+    '/'    shift, and go to state 79
+    '%'    shift, and go to state 80
+    '&'    shift, and go to state 81
+    '|'    shift, and go to state 82
+    '^'    shift, and go to state 83
+    '{'    shift, and go to state 22
+
+    stmtBlock  转到状态 129
+
+
+State 126
 
    29 forStmt: FOR expr ';' expr ';' . expr stmtBlock
    30        | FOR expr ';' expr ';' . stmtBlock
@@ -2414,12 +2427,12 @@ State 125
     '('           shift, and go to state 42
     '{'           shift, and go to state 22
 
-    stmtBlock  转到状态 129
-    expr       转到状态 130
+    stmtBlock  转到状态 130
+    expr       转到状态 131
     call       转到状态 53
 
 
-State 126
+State 127
 
    49 expr: expr . '+' expr
    50     | expr . '-' expr
@@ -2437,7 +2450,7 @@ State 126
    63     | expr . '^' expr
    66     | expr . '&' expr
    67     | expr . '|' expr
-   71 actual_list: actual_list ',' expr .
+   72 actual_list_notNone: actual_list_notNone ',' expr .
 
     AND    shift, and go to state 68
     OR     shift, and go to state 69
@@ -2456,31 +2469,31 @@ State 126
     '|'    shift, and go to state 82
     '^'    shift, and go to state 83
 
-    $default  reduce using rule 71 (actual_list)
+    $default  reduce using rule 72 (actual_list_notNone)
 
 
-State 127
+State 128
 
    33 forStmt: FOR ';' expr ';' expr stmtBlock .
 
     $default  reduce using rule 33 (forStmt)
 
 
-State 128
+State 129
 
    31 forStmt: FOR expr ';' ';' expr stmtBlock .
 
     $default  reduce using rule 31 (forStmt)
 
 
-State 129
+State 130
 
    30 forStmt: FOR expr ';' expr ';' stmtBlock .
 
     $default  reduce using rule 30 (forStmt)
 
 
-State 130
+State 131
 
    29 forStmt: FOR expr ';' expr ';' expr . stmtBlock
    49 expr: expr . '+' expr
@@ -2518,10 +2531,10 @@ State 130
     '^'    shift, and go to state 83
     '{'    shift, and go to state 22
 
-    stmtBlock  转到状态 131
+    stmtBlock  转到状态 132
 
 
-State 131
+State 132
 
    29 forStmt: FOR expr ';' expr ';' expr stmtBlock .
 
